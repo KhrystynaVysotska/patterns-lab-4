@@ -1,0 +1,10 @@
+{% extends "progress.html" %}
+{% block body %}
+<form method=post>
+    <div class="form-group mt-5">
+        <label for="url">URL</label>
+        <input type=text class="form-control" id=url name=url value="{{request.form.url}}">
+    </div>
+    <button type="submit" class="btn btn-secondary">Extract</button>
+</form>
+{% endblock %}
