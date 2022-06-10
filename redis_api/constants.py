@@ -1,0 +1,16 @@
+import os
+
+# HASH KEYS
+STATUS_KEY = "status"
+RECORDS_KEY = "records"
+START_TIMESTAMP = "start_timestamp"
+
+# STATUSES
+COMPLETED = "COMPLETED"
+FAILED = "FAILED"
+IN_PROCESS = "IN PROCESS"
+
+# CONNECTION
+PORT = int(os.environ["REDIS_PORT"])
+HOSTNAME = os.environ["REDIS_HOSTNAME"]
+PASSWORD = os.environ["REDIS_ACCESS_KEY"]
