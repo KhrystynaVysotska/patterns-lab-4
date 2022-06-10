@@ -5,7 +5,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<div class="mx-auto" style="width: 600px;">
+<div class="mx-auto" style="width: 850px;">
     {% block body %}{% endblock %}
     <div class="mt-5">
         <h6>Processing status</h6>
@@ -18,9 +18,16 @@
     var progress = document.getElementById("progress");
     let eventSource = new EventSource("/listen");
 
-    eventSource.addEventListener('info', function(e) {
+    eventSource.addEventListener('message', function(e) {
         var div = document.createElement("div");
         div.className = "alert alert-primary";
+        div.appendChild(document.createTextNode(event.data));
+        progress.appendChild(div)
+    });
+
+    eventSource.addEventListener('info', function(e) {
+        var div = document.createElement("div");
+        div.className = "alert alert-secondary";
         div.appendChild(document.createTextNode(event.data));
         progress.appendChild(div)
     });

@@ -16,3 +16,10 @@ def format_sse(data: str, event=None) -> str:
     if event is not None:
         msg = f'event: {event}\n{msg}'
     return msg
+
+
+def get_filename_from_url(url: str) -> str:
+    filename = url.split('/')[-1]
+    if filename.split('.')[-1] != 'json':
+        filename += '.json'
+    return filename

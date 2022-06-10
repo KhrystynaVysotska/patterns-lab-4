@@ -5,6 +5,7 @@ from typing import List
 from azure.eventhub.aio import EventHubProducerClient
 from azure.eventhub import EventData
 
+from etl.constants import CONNECTION_STRING, EVENTHUB_NAME
 from helpers import get_or_create_eventloop
 
 
@@ -19,10 +20,20 @@ class ConsoleLoadStrategy(LoadStrategy):
         print(data)
 
 
+class FileLoadStrategy(LoadStrategy):
+    def __init__(self, filename: str):
+        self.filename = f"extracted/{filename}"
+
+    def load(self, data: List[str]):
+        with open(self.filename, "a") as file:
+            for record in data:
+                file.write("%s\n" % record)
+
+
 class EventHubLoadStrategy(LoadStrategy):
-    def __init__(self, configs):
-        self.configs = configs
+    def __init__(self):
         self.producer = None
+        self.configs = {"conn_str": CONNECTION_STRING, "eventhub_name": EVENTHUB_NAME}
 
     def get_producer(self):
         if not self.producer:
