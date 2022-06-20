@@ -1,0 +1,53 @@
+GET violations_stats_index/_search
+{
+  "track_total_hits": true
+}
+
+GET violations_stats_index/_search?size=0
+{
+  "aggs": {
+    "by_state": {
+      "terms": {
+        "field": "state.keyword"
+      },
+      "aggs": {
+       "violations_number_sum":  {
+          "sum": {
+             "field": "violations_number"
+          }
+       },
+       "violations_number_bucket_sort": {
+         "bucket_sort": {
+           "sort": [{"violations_number_sum": {"order": "desc"}}],
+           "size": 5
+         }
+       }
+      }
+    }
+  }
+}
+
+
+GET violations_stats_index/_search?size=0
+{
+  "aggs": {
+    "by_state": {
+      "terms": {
+        "field": "violation.keyword"
+      },
+      "aggs": {
+       "violations_number_sum":  {
+          "sum": {
+             "field": "violations_number"
+          }
+       },
+       "violations_number_bucket_sort": {
+         "bucket_sort": {
+           "sort": [{"violations_number_sum": {"order": "desc"}}],
+           "size": 5
+         }
+       }
+      }
+    }
+  }
+}
